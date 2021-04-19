@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'assistant_api'
 ]
 
 MIDDLEWARE = [
@@ -67,6 +69,19 @@ TEMPLATES = [
     },
 ]
 
+CACHES = {
+    'default': {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "user_configuration"
+    }
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
 WSGI_APPLICATION = 'clothing_assistant_rest.wsgi.application'
 
 
@@ -75,9 +90,13 @@ WSGI_APPLICATION = 'clothing_assistant_rest.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'clothing',
+        'USER': 'admin',
+        'PASSWORD': 'growstreethome',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
 }
 
 
